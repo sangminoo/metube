@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Logo } from "./Icons/Logo";
-import MenuIcon from "./Icons/Menu";
 import Search from "./Icons/Search";
 import {
   useState,
@@ -16,7 +15,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { UserImage } from "./Components";
 import DotsVertical from "./Icons/DotsVertical";
 import Settings from "./Icons/Settings";
-import Button from "./Buttons/Button";
 import HelpCircle from "./Icons/HelpCircle";
 import { cn } from "lib/untils";
 import Bell from "./Icons/Bell";
@@ -144,7 +142,7 @@ const Navbar = ({ children }: NavbarProps) => {
   return (
     <div className="fixed z-50 mx-auto  w-full bg-white lg:overflow-visible">
       {/* input search mobile */}
-      <div className="absolute top-0 z-40 mx-auto flex hidden w-full items-center justify-between bg-gray-100 px-3  py-4 shadow-inherit sm:hidden">
+      <div className="absolute top-0 z-40 mx-auto  hidden w-full items-center justify-between bg-gray-100 px-3  py-4 shadow-inherit sm:hidden">
         <Left className="h-7 w-7" />
         <div className="relative mx-3 flex h-full  w-full items-center">
           <input
@@ -257,13 +255,12 @@ const Navbar = ({ children }: NavbarProps) => {
 
                 {/* TODO: Icon bell notification */}
                 <div className="ml-0 cursor-pointer rounded-full p-2 hover:bg-gray-100    md:hover:bg-gray-300">
-
-                <Bell
-                  className={`${
-                    isMobile ? "h-5 w-5" : "h-6 w-6"
-                  }    stroke-gray-600`}
-                />
-              </div>
+                  <Bell
+                    className={`${
+                      isMobile ? "h-5 w-5" : "h-6 w-6"
+                    }    stroke-gray-600`}
+                  />
+                </div>
 
                 {/*  */}
                 <div className="ml-0 cursor-pointer rounded-full p-2 hover:bg-gray-200 md:ml-4 md:hidden md:bg-gray-100  md:hover:bg-gray-300">
@@ -310,30 +307,7 @@ const Navbar = ({ children }: NavbarProps) => {
                         </Menu.Item>
                       ))}
                     </div>
-                    {/* <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            className={`${
-                              active
-                                ? "bg-gray-100 text-black"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          >
-                            {active ? (
-                              <Settings
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <Settings
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            )}
-                            Duplicate
-                          </button>
-                        )}
-                      </Menu.Item>
+
                     <div className="px-1 py-1">
                       <Menu.Item>
                         {({ active }) => (
@@ -409,156 +383,129 @@ const Navbar = ({ children }: NavbarProps) => {
                           </button>
                         )}
                       </Menu.Item>
-                    </div> */}
+                    </div>
                   </Menu.Items>
                 </Transition>
               </Menu>
             )}
-           {sessionData?.user &&  <Menu as="div" className="relative  flex-shrink-0  ">
-              <div className="h-full">
-                <Menu.Button className={`focus:ring-primary-500 ${isMobile ? "pl-2 ml-1" : "px-4" }   flex h-full w-full items-center justify-center  md:rounded-full md:focus:outline-none  focus:right-1`}>
-                  {sessionData && (
-                    <UserImage
-                      image={sessionData?.user?.image ?? ""}
-                      className=""
-                    />
-                  )}
-                </Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className=" absolute right-0 mt-2 w-72 origin-top-right divide-y divide-gray-100  rounded-md bg-white shadow-inner ring-1 ring-black/5 focus:outline-none">
-                    <div className="">
-                      {/* <Menu.Item as={"div"}>
-                        {({ active }) => (
-                          <div 
-                          className=" flex items-center justify-start gap-x-4 py-4 px-4 "
-                       
-                          >
-                             <div className=" mb-7 ">
-                                <UserImage
-                                  image={sessionData?.user?.image ?? ""}
-                                  className="w-10 h-10"
-                                  aria-hidden="true"
-                                />
-                             </div>
-
-                            <div className="  justify-center items-center ">
-                              <div className="text-sm font-medium text-gray-900">
-                                {sessionData?.user?.name}
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {sessionData?.user?.email}
-                              </div>
-
-                              <span className=" text-blue-700 font-medium text-[14px]">Create a channel</span>
-                            </div>
-                          </div>
-
-                       
-                        )}
-                        
-                      </Menu.Item> */}
-
-                      {/*  */}
-                      <Menu.Item>
-                        {({ active }) => (
-                          <div className=" mb-2 flex items-center justify-start gap-x-4 border-b border-gray-200 px-4 py-4 ">
-                            <div className=" mb-7 ">
-                              <UserImage
-                                image={sessionData?.user?.image ?? ""}
-                                className="h-10 w-10"
-                                aria-hidden="true"
-                              />
-                            </div>
-
-                            <div className="  items-center justify-center ">
-                              <div className="text-sm font-medium text-gray-900">
-                                {sessionData?.user?.name}
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {sessionData?.user?.email}
-                              </div>
-
-                              <span className=" text-[14px] font-medium text-blue-700">
-                                Create a channel
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </Menu.Item>
-
-                      {signedInNavigation.map((item) => (
+            {sessionData?.user && (
+              <Menu as="div" className="relative  flex-shrink-0  ">
+                <div className="h-full">
+                  <Menu.Button
+                    className={`focus:ring-primary-500 ${
+                      isMobile ? "ml-1 pl-2" : "px-4"
+                    }   flex h-full w-full items-center justify-center  focus:right-1 md:rounded-full  md:focus:outline-none`}
+                  >
+                    {sessionData && (
+                      <UserImage
+                        image={sessionData?.user?.image ?? ""}
+                        className=""
+                      />
+                    )}
+                  </Menu.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className=" absolute right-0 mt-2 w-72 origin-top-right divide-y divide-gray-100  rounded-md bg-white shadow-inner ring-1 ring-black/5 focus:outline-none">
+                      <div className="">
+                        {/*  */}
                         <Menu.Item>
                           {({ active }) => (
-                            <Link
-                              onClick={(e) => {
-                                e.preventDefault();
-                                if (item.path === "sign-out") {
-                                  void signOut();
-                                } else {
-                                  void router.push(item.path || "/");
-                                }
-                              }}
-                              href={item.path || "/"}
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                              className={cn(
-                                `${
-                                  active
-                                    ? "bg-gray-100 text-black"
-                                    : "text-gray-900"
-                                } group flex w-full items-center px-2 py-2 text-[16px]`,
-                                item.lineAbove
-                                  ? "mt-2 border-t border-gray-200"
-                                  : "",
-                              )}
-                            >
-                              {item.icon("mr-2 h-5 w-5")}
-                              {item.name}
-                            </Link>
+                            <div className=" mb-2 flex items-center justify-start gap-x-4 border-b border-gray-200 px-4 py-4 ">
+                              <div className=" mb-7 ">
+                                <UserImage
+                                  image={sessionData?.user?.image ?? ""}
+                                  className="h-10 w-10"
+                                  aria-hidden="true"
+                                />
+                              </div>
+
+                              <div className="  items-center justify-center ">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {sessionData?.user?.name}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {sessionData?.user?.email}
+                                </div>
+
+                                <span className=" text-[14px] font-medium text-blue-700">
+                                  Create a channel
+                                </span>
+                              </div>
+                            </div>
                           )}
                         </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
 
-                
-              </div>
-            </Menu>}
+                        {signedInNavigation.map((item) => (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  if (item.path === "sign-out") {
+                                    void signOut();
+                                  } else {
+                                    void router.push(item.path || "/");
+                                  }
+                                }}
+                                href={item.path || "/"}
+                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                className={cn(
+                                  `${
+                                    active
+                                      ? "bg-gray-100 text-black"
+                                      : "text-gray-900"
+                                  } group flex w-full items-center px-2 py-2 text-[16px]`,
+                                  item.lineAbove
+                                    ? "mt-2 border-t border-gray-200"
+                                    : "",
+                                )}
+                              >
+                                {item.icon("mr-2 h-5 w-5")}
+                                {item.name}
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        ))}
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </div>
+              </Menu>
+            )}
             {!sessionData && (
-                  <button
-                    onClick={async () =>
-                      await signIn("", {
-                        callbackUrl: "http://localhost:3000",
-                      })
-                    }
-                    className="flex justify-center items-center cursor-pointer rounded-full border border-gray-300 ml-2 px-2 py-1 text-[#065fd4] hover:border-[#def1ff] hover:bg-[#def1ff]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M18 20a6 6 0 0 0-12 0" />
-                      <circle cx="12" cy="10" r="4" />
-                      <circle cx="12" cy="12" r="10" />
-                    </svg>
-                    <p className="text-md ml-2 font-medium">Sign in</p>
-                  </button>
-                )}
+              <button
+                onClick={async () =>
+                  await signIn("", {
+                    callbackUrl: "http://localhost:3000",
+                  })
+                }
+                className="ml-2 flex cursor-pointer items-center justify-center rounded-full border border-gray-300 px-2 py-1 text-[#065fd4] hover:border-[#def1ff] hover:bg-[#def1ff]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 20a6 6 0 0 0-12 0" />
+                  <circle cx="12" cy="10" r="4" />
+                  <circle cx="12" cy="12" r="10" />
+                </svg>
+                <p className="text-md ml-2 font-medium">Sign in</p>
+              </button>
+            )}
             {/* <Image
               width={34}
               height={34}

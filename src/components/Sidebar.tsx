@@ -8,7 +8,7 @@ import Menu from "./Icons/Menu";
 import ThumbsUp from "./Icons/ThumbsUp";
 import Folder from "./Icons/Folder";
 import Subscriptions from "./Icons/Subscriptions";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect} from "react";
 import Settings from "./Icons/Settings";
 import HelpCircle from "./Icons/HelpCircle";
 import { Logo } from "./Icons/Logo";
@@ -39,7 +39,6 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
   // console.log(isMobile);
 
   const { data: sessionData } = useSession();
-  // const [isShowing, setIsShowing] = useState(false);
   const userId = sessionData?.user?.id;
 
   const router = useRouter();
