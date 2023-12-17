@@ -1,5 +1,6 @@
 import { EngagementType } from "@prisma/client";
-import { z } from "zod";
+import { log } from "console";
+import { number, z } from "zod";
 
 import {
   createTRPCRouter,
@@ -36,25 +37,42 @@ export const videoRouter = createTRPCRouter({
       );
 
       //
-      const indices = Array.from(
+      const indices: (number | undefined)[] = Array.from(
         {
           length: videosWithCounts.length,
         },
         (_, i) => i,
       );
 
+      // // Loại bỏ các phần tử undefined trong mảng indices
+      // const filteredIndices = indices.filter(
+      //   (index): index is number => index !== undefined,
+      // );
       // Shuffle the indices array
+      console.log(indices);
 
       for (let i = indices.length - 1; i > 0; i--) {
         if (indices[i] !== undefined) {
-          const j = Math.floor(Math.random() * (i + 1));
+        // console.log(indices[i]);
+
+        const j = Math.floor(Math.random() * (i + 1));
+        // console.log(j);
 
           [indices[i], indices[j]] = [indices[j], indices[i]];
         }
+        // if (indices[i] !== undefined  && indices[j] !== undefined) {
+        //   [indices[i], indices[j]] = [indices[j], indices[i]];
+        // } 
       }
-
-      const shuffledVideosWithCounts = indices.map((i) => videosWithCounts[i]);
-      const shuffledUsers = indices.map((i) => users[i]);
+      // / Loại bỏ các giá trị undefined từ mảng indices
+      const filteredIndices = indices.filter((index): index is number => index !== undefined);
+      
+      const shuffledVideosWithCounts = filteredIndices.map((i) => videosWithCounts[i]);
+      const shuffledUsers = filteredIndices.map((i) => users[i]);
+      // // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // const shuffledVideosWithCounts = indices.map((i) => videosWithCounts[i]);
+      // // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // const shuffledUsers = indices.map((i) => users[i]);
 
       const randomVideos = shuffledVideosWithCounts.slice(0, input);
       const randomUsers = shuffledUsers.slice(0, input);
@@ -62,7 +80,6 @@ export const videoRouter = createTRPCRouter({
       return { videos: randomVideos, users: randomUsers };
     }),
 });
-
 
 // import { z } from "zod";
 
@@ -106,5 +123,3 @@ export const videoRouter = createTRPCRouter({
 //     return "you can now see this secret message!";
 //   }),
 // });
-
-

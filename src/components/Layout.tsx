@@ -3,7 +3,6 @@ import { Navbar, Sidebar } from "./Components";
 import MenuIcon from "./Icons/Menu";
 import useIsMobile from "~/utils/useIsMobile";
 import { cn } from "lib/untils";
-import { Category } from "./Test";
 import ArrowLeft from "./Icons/ArrowLeft";
 import ArrowRight from "./Icons/ArrowRight";
 import Footer from "./Footer";
@@ -27,49 +26,85 @@ const categoryTittle = [
 const Layout = ({ children, closeSidebar }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const elementRef = useRef(null);
+  const elementRef = useRef<HTMLUListElement>(null);
   const [arrowDisable, setArrowDisable] = useState(true);
   const [arrowVisible, setArrowVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(0);
-  const [showRightArrow, setShowRightArrow] = useState(false);
+  // const [showRightArrow, setShowRightArrow] = useState(false);
 
-  const handleHorizantalScroll = (element, speed, distance, step) => {
-    let scrollAmount = 0;
-    // console.log(element.scrollLeft);
+  // const handleHorizantalScroll = (
+  //   element : React.RefObject<HTMLUListElement>,
+  //   speed: number,
+  //   distance: number,
+  //   step: number,
+  // ) => {
+  //   let scrollAmount = 0;
+  //   // console.log(element.scrollLeft);
+  //   // console.log(element);
+
+  //   const slideTimer = setInterval(() => {
+  //     element.scrollLeft += step;
+  //     scrollAmount += Math.abs(step);
+  //     if (scrollAmount >= distance) {
+  //       clearInterval(slideTimer);
+  //     }
+  //     if (element.scrollLeft === 0) {
+  //       setArrowDisable(true);
+  //     } else {
+  //       setArrowDisable(false);
+  //     }
+  //     let maxScrollValue = element.scrollWidth - element.clientWidth;
+  //     // console.log("Scroll Width: ", element.scrollWidth);
+  //     // console.log("Client Width: ", element.clientWidth);
+  //     // console.log(maxScrollValue);
+  //     // console.log(element.scrollLeft);
+
+  //     if (element.scrollLeft >= maxScrollValue) {
+  //       setArrowVisible(true);
+  //     } else {
+  //       setArrowVisible(false);
+  //     }
+  //   }, speed);
+  // };
+
+  const handleHorizantalScroll = (
+    elementRef: React.RefObject<HTMLUListElement>,
+    speed: number,
+    distance: number,
+    step: number,
+  ) => {
+    const element = elementRef.current;
     // console.log(element);
 
-    const slideTimer = setInterval(() => {
-      element.scrollLeft += step;
-      scrollAmount += Math.abs(step);
-      if (scrollAmount >= distance) {
-        clearInterval(slideTimer);
-      }
-      if (element.scrollLeft === 0) {
-        setArrowDisable(true);
-      } else {
-        setArrowDisable(false);
-      }
-      let maxScrollValue = element.scrollWidth - element.clientWidth;
-      console.log("Scroll Width: ", element.scrollWidth);
-      console.log("Client Width: ", element.clientWidth);
-      console.log(maxScrollValue);
-      console.log(element.scrollLeft);
+    if (element !== null) {
+      let scrollAmount = 0;
+      const slideTimer = setInterval(() => {
+        element.scrollLeft += step;
+        scrollAmount += Math.abs(step);
+        if (scrollAmount >= distance) {
+          clearInterval(slideTimer);
+        }
+        if (element.scrollLeft === 0) {
+          setArrowDisable(true);
+        } else {
+          setArrowDisable(false);
+        }
 
-      if (element.scrollLeft >= maxScrollValue) {
-        setArrowVisible(true);
-      } else {
-        setArrowVisible(false);
-      }
-
-  
-    }, speed);
+        const maxScrollValue = element.scrollWidth - element.clientWidth;
+        if (element.scrollLeft >= maxScrollValue) {
+          setArrowVisible(true);
+        } else {
+          setArrowVisible(false);
+        }
+      }, speed);
+    }
   };
 
   const isMobile = useIsMobile();
 
-  const MenuItem = ({ text, selected }) => {
-    return <div className="menu-item">{text}</div>;
-  };
+  // const MenuItem = ({ text, selected }) => {
+  //   return <div className="menu-item">{text}</div>;
+  // };
 
   return (
     <div className="overflow-hidden">
@@ -86,7 +121,7 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
 
       {/* // Todo: Category explore */}
 
-      <div className="fixed top-14 md:top-14  mx-auto  h-14 w-screen  overflow-hidden bg-white z-10 ">
+      <div className="fixed top-14 z-10  mx-auto  h-14 w-screen  overflow-hidden bg-white md:top-14 ">
         {/* <ul
           className={cn(
             sidebarOpen ? "xl:ml-[264px]" : "xl:ml-[96px] ",
@@ -127,7 +162,7 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
                 <button
                   className="cursor-pointer rounded-full p-3 hover:bg-slate-200 "
                   onClick={() => {
-                    handleHorizantalScroll(elementRef.current, 25, 100, -10);
+                    handleHorizantalScroll(elementRef, 25, 100, -10);
                   }}
                   disabled={arrowDisable}
                 >
@@ -176,7 +211,7 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
                 <button
                   className="cursor-pointer rounded-full p-3 hover:bg-slate-200 "
                   onClick={() => {
-                    handleHorizantalScroll(elementRef.current, 25, 100, 10);
+                    handleHorizantalScroll(elementRef, 25, 100, 10);
                   }}
                   // disabled={arrowDisable}
                 >
@@ -202,16 +237,18 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
 
       <div
         className={cn(
-          sidebarOpen ? "xl:pl-[232px] md:pl-[64px]" : "xl:pl-[64px] md:pl-[64px]",
-          " mt-[72px] md:mt-20 px-0 py-8 md:mr-10 xl:mr-8  mr-12   ",
+          sidebarOpen
+            ? "md:pl-[64px] xl:pl-[232px]"
+            : "md:pl-[64px] xl:pl-[64px]",
+          " mr-8 mt-[72px] px-0 py-8 md:mr-10 md:mt-20  xl:mr-8   ",
         )}
       >
         <main
           className={cn(
             sidebarOpen
               ? " xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 "
-              : " xl:grid-cols-4 2xl:grid-cols-5 ",
-            "grid h-full w-full  grid-cols-1 md:gap-x-1 2xl:gap-x-1 md:gap-y-12 lg:gap-y-16 gap-y-8  overflow-hidden  sm:grid-cols-2 lg:grid-cols-3 sm:mx-4 mx-4",
+              : " xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 ",
+            "mx-4 grid h-full  w-full grid-cols-1 gap-y-8 overflow-hidden sm:mx-4 sm:grid-cols-2  md:gap-x-1  md:gap-y-12 lg:grid-cols-3 lg:gap-y-16 2xl:gap-x-1",
           )}
         >
           {" "}
