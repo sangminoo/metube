@@ -26,6 +26,19 @@ export { default as Search } from "./Search";
 export { default as Menu } from "./Menu";
 export { default as Micro } from "./Micro";
 export { default as Keyboard } from "./Keyboard";
+export { default as Subscriptions } from "./Subscriptions";
+export { default as Youtube } from "./youtube";
+export { default as Trending } from "./Trending";
+export { default as Notifications } from "./Notifications";
+export { default as Camera } from "./Camera";
+export { default as Bell } from "./Bell";
+export { default as Left } from "./Left";
+export { default as Shorts } from "./Shorts";
+export { default as ArrowRight } from "./ArrowRight";
+export { default as ArrowLeft } from "./ArrowLeft";
+export { default as Library } from "./Library";
+export { default as PlusCircle } from "./PlusCircle";
+export { default as NotFound } from "./NotFound";
 export { RedTrash } from "./RedTrash";
 export {
   GreenPlay,

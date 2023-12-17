@@ -7,10 +7,11 @@
     "build": "next build",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "dev": "next dev",
+    "dev": "next dev ",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -22,18 +23,24 @@
     "@trpc/next": "^10.43.6",
     "@trpc/react-query": "^10.43.6",
     "@trpc/server": "^10.43.6",
+    "clsx": "^2.0.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-horizontal-scrolling-menu": "^4.1.1",
+    "react-loading-skeleton": "^3.3.1",
     "superjson": "^2.2.1",
+    "tailwind-merge": "^2.1.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.3",
     "@types/eslint": "^8.44.7",
-    "@types/node": "^18.18.13",
-    "@types/react": "^18.2.37",
+    "@types/node": "^18.18.14",
+    "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
@@ -43,6 +50,7 @@
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.5.7",
     "prisma": "^5.6.0",
+    "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.3.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
