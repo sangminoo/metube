@@ -39,6 +39,16 @@ export { default as ArrowLeft } from "./ArrowLeft";
 export { default as Library } from "./Library";
 export { default as PlusCircle } from "./PlusCircle";
 export { default as NotFound } from "./NotFound";
+export { default as ArrowDown } from "./ArrowDown";
+export { default as BellRing } from "./BellRing";
+export { default as Like } from "./Like";
+export { default as Liked } from "./Liked";
+export { default as Unlike } from "./Unlike";
+export { default as Unliked } from "./Unliked";
+export { default as Share } from "./Share";
+export { default as Heart } from "./Heart";
+export { default as FaceSmile } from "./FaceSmile";
+export { default as SavePlus } from "./SavePlus";
 export { RedTrash } from "./RedTrash";
 export {
   GreenPlay,

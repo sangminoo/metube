@@ -119,7 +119,7 @@ const Navbar = ({ children }: NavbarProps) => {
   const handleSearch = async () => {
     try {
       await router.push({
-        pathname: "/searchPage",
+        pathname: "/SearchPage",
         query: { q: SearchInput },
       });
     } catch (error) {
@@ -220,7 +220,11 @@ const Navbar = ({ children }: NavbarProps) => {
                   onKeyDown={handleKeyDown}
                 />
 
-                <button className="right-0 -ml-[1px] hidden  rounded-br-full  rounded-tr-full bg-gray-100  px-6  py-3 ring-1 ring-inset    ring-gray-300 placeholder:text-gray-400 hover:bg-gray-200  hover:ring-gray-400  focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:block sm:text-sm sm:leading-6">
+                <button
+                  onClick={handleSearch}
+                  disabled={ SearchInput.trim() ? false : true }
+                  className="right-0 -ml-[1px] hidden  rounded-br-full hover:cursor-pointer  rounded-tr-full bg-gray-100  px-6  py-3 ring-1 ring-inset    ring-gray-300 placeholder:text-gray-400 hover:bg-gray-200  hover:ring-gray-400  focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:block sm:text-sm sm:leading-6"
+                >
                   <Search className=" h-4 w-4  stroke-gray-600" />
                 </button>
 

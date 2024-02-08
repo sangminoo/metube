@@ -4,34 +4,31 @@ import ErrorPage from "~/components/Error";
 
 import { api } from "~/utils/api";
 import CardSkeleton from "~/components/CardSkeleton";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { SingleColumnVideo } from "~/components/VideoComponent";
 
-export default function Home() {
+export default function SearchPage() {
   // const hello = api.post.hello.useQuery({ text: "from tRPC" });
+  const router = useRouter();
+  const searchQuery = router.query.q;
+  // console.log(searchQuery);
 
-  const res = api.video.getRandomVideos.useQuery(40, { enabled: false });
-  const { data, isLoading, error, refetch: refetchSidebarVideos } = res;
-  // console.log(isLoading);
-  // console.log(data?.videos.length);
-
-  useEffect(() => {
-    if (!data) {
-      void refetchSidebarVideos(); // manually refetch sidebarVideos if they do not exist
-    }
-
-    const refreshVideo = setInterval(() => {
-      void refetchSidebarVideos();
-    }, 600000);
-
-    return () => clearInterval(refreshVideo);
-  }, []);
+  const { data, isLoading, error } = api.video.getVideosBySearch.useQuery(
+    searchQuery as string,
+  );
+  // console.log(data?.videos);
+  // console.log(data?.users);
 
   const Message = () => {
-    if (error ?? !data) {
+    if (isLoading) {
+      return <CardSkeleton cards={30} />;
+    } else if (error ?? !data) {
+      return <ErrorPage title="Not found" desc="No videos or results found" />;
+    } else if (data.videos.length === 0) {
       return (
         <ErrorPage
-          title="No results found"
-          desc="No videos. Try refresh or check your network again"
+          title="No found results"
+          desc="Try refresh tab again or check connects your networks"
         />
       );
     }
@@ -45,20 +42,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="mt-[80px] grid  h-full grid-cols-1 gap-y-8 overflow-hidden sm:mx-4 sm:grid-cols-2 md:gap-x-1 md:gap-y-8 lg:grid-cols-3    xl:grid-cols-3 2xl:grid-cols-4 2xl:gap-x-1 3xl:grid-cols-5">
-          {/* Main */}
+        {/* Main */}
+
+        <div className="h-full">
           {!data ??
             (error && (
               // <ErrorPage />
               <Message />
             ))}
-          {data?.videos.length === 0 && <Message />}
-          <>
-            {isLoading && <CardSkeleton cards={30} />}
-            {data?.videos && (
-              <MuliColumnVideo
+
+          {data && (
+            <>
+              {/* // Todo: Category explore */}
+              <SingleColumnVideo
                 users={(data?.users ?? []).map((user) => ({
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
                   image: user?.image ?? "",
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
                   name: user?.name ?? "",
                 }))}
                 videos={(data?.videos ?? []).map((video) => ({
@@ -69,11 +69,39 @@ export default function Home() {
                   createdAt: video?.createdAt ?? new Date(),
                   views: video?.views ?? 0,
                 }))}
-                isLoading={isLoading}
               />
-            )}
-          </>
+            </>
+          )}
+
+          {data?.videos.length === 0 && (
+            <>
+              <Message />
+            </>
+          )}
         </div>
+        {/* {!data ?? error ? (
+          // <ErrorPage />
+          <Message />
+        ) : (
+          <>
+              <MuliColumnVideo
+                users={(data?.users ?? []).map((user) => ({
+                  image: user?.image ?? "",
+                  name: user?.name ?? "",
+                }))}
+                videos={(data?.videos ?? []).map((video) => ({
+                  id: video?.id ?? "",
+                  title: video?.title ?? "",
+                  thumbnailUrl: video?.thumbnailUrl ?? "",
+                  createdAt: video?.createdAt ?? new Date(),
+                  views: video?.views ?? 0,
+                }))}
+              />
+           
+          </>
+        )} */}
+
+        {/* <div className="bg-white"> <SliderTabs /></div> */}
       </Layout>
     </>
   );

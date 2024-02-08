@@ -10,7 +10,7 @@ const Thumbnail = ({
   return (
     <>
       <Image src={thumbnailUrl ?? "/background.jpg"} fill alt={title ?? ""}
-        className="absolute inset-0  rounded-xl object-cover"
+        className="absolute inset-0  rounded-[10px] object-cover"
       />
     </>
   );

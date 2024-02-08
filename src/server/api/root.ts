@@ -1,5 +1,9 @@
 import { videoRouter } from "~/server/api/routers/video";
+import { videoEngagementRouter } from "~/server/api/routers/videoEngagement";
 import { createTRPCRouter } from "~/server/api/trpc";
+import { userRouter } from "~/server/api/routers/user";
+import { commentRouter } from "./routers/comment";
+import { playlistRouter } from "./routers/playlist";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +12,10 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   video: videoRouter,
+  user: userRouter,
+  videoEngagement: videoEngagementRouter,
+  comment: commentRouter,
+  playlist: playlistRouter,
 });
 
 // export type definition of API

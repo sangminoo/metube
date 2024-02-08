@@ -1,18 +1,14 @@
 export default function Plus(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      {...props}
-      viewBox="0 0 21 20"
-      fill="none"
+      width="800px"
+      height="800px"
+      viewBox="0 0 17 17"
       xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      {...props}
     >
-      <path
-        d="M10.5 4.1665V15.8332M4.66663 9.99984H16.3333"
-        stroke="white"
-        stroke-width="1.66667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+      <path d="M16 9h-7v7h-1v-7h-7v-1h7v-7h1v7h7v1z" fill="#000000" />
     </svg>
   );
 }

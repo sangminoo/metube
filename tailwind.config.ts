@@ -3,24 +3,27 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./src/**/*.tsx"],
-  
+
   theme: {
     screens: {
-      'sm': '640px',
+      xs: "435px",
       // => @media (min-width: 640px) { ... }
 
-      'md': '768px',
+      sm: "640px",
+      // => @media (min-width: 640px) { ... }
+
+      md: "768px",
       // => @media (min-width: 768px) { ... }
 
-      'lg': '1024px',
+      lg: "1024px",
       // => @media (min-width: 1024px) { ... }
 
-      'xl': '1280px',
+      xl: "1280px",
       // => @media (min-width: 1280px) { ... }
 
-      '2xl': '1424px',
+      "2xl": "1424px",
       // => @media (min-width: 1424px) { ... }
-      '3xl': '1750px',
+      "3xl": "1750px",
       // => @media (min-width: 1750px) { ... }
     },
     extend: {
@@ -29,7 +32,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('tailwind-scrollbar'),
-  ],
+  plugins: [require("tailwind-scrollbar"), require("daisyui")],
 } satisfies Config;

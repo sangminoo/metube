@@ -19,7 +19,7 @@ import Shorts from "./Icons/Shorts";
 import useIsTablet from "~/utils/useIsTablet";
 import useIsMobile from "~/utils/useIsMobile";
 
-interface SidebarProps {
+interface SidebarMobileProps {
   isOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   closeSidebar?: boolean;
@@ -32,11 +32,16 @@ interface NavigationItem {
   current: boolean;
 }
 
-const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
+const SideBarMobile = ({
+  setSidebarOpen,
+  isOpen,
+  closeSidebar,
+}: SidebarMobileProps) => {
   const isTablet = useIsTablet();
   const isMobile = useIsMobile();
   // console.log(isTablet);
   // console.log(isMobile);
+  console.log(isOpen);
 
   const [isSidebarBaseVisible, setIsSidebarBaseVisible] = useState(false);
   const { data: sessionData } = useSession();
@@ -191,256 +196,10 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
 
   return (
     <>
-      {isOpen && !isTablet && !isSidebarBaseVisible && (
-        <div
-          className={cn(
-            "bottom-0 top-14   hidden lg:fixed lg:z-40 lg:flex lg:flex-col ",
-            closeSidebar ? "lg:w-[70px]" : "lg:w-60" || closeSidebar && !isSidebarBaseVisible && "lg:w-0",
-          )}
-        >
-          <div className=" scrollbarBase flex grow flex-col  gap-y-5   overflow-y-auto  bg-white  pb-4">
-            <nav className="my-3 flex flex-col  ">
-              <ul role="list" className="flex flex-1 flex-col   ">
-                <li className="mt-auto">
-                  <ul role="list" className="">
-                    {desktopNavigation.map((item) => (
-                      <li key={item.name}>
-                        <Link
-                          href={"#"}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (item.path === "sign-in") {
-                              void signIn();
-                            } else {
-                              void router.push(item.path ?? "/");
-                            }
-                          }}
-                          className={cn(
-                            item.current
-                              ? " text-primary-600 bg-gray-100 font-semibold  hover:bg-gray-200 "
-                              : " hover:text-primary-600 text-gray-700 hover:bg-gray-100",
-                            "group ml-4  mr-6 flex  rounded-xl p-2 text-[16px] leading-6 ",
-                          )}
-                        >
-                          <div className="flex w-full items-center gap-x-6 px-1 ">
-                            <div className=" ">
-                              {item.current
-                                ? item.icon(
-                                    "h-5 w-5 shrink-0  stroke-fuchsia-950 fill-black ",
-                                  )
-                                : item.icon(
-                                    "h-5 w-5 shrink-0  stroke-gray-950  group-hover:stroke-fuchsia-950",
-                                  )}
-                            </div>
-                            <p className="">{item.name} </p>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                {/*  */}
-                <span className="mx-3 my-3 border-t   "></span>
-                <p className="ml-4  mr-6 px-3 py-1 text-base font-semibold">
-                  Explore
-                </p>
-                <li className="mt-auto">
-                  <ul role="list" className="">
-                    {explore.map((item) => (
-                      <li key={item.name}>
-                        <Link
-                          href={"#"}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (item.path === "sign-in") {
-                              void signIn();
-                            } else {
-                              void router.push(item.path ?? "/");
-                            }
-                          }}
-                          className={cn(
-                            item.current
-                              ? " text-primary-600 bg-gray-100 font-semibold  hover:bg-gray-200 "
-                              : " hover:text-primary-600 text-gray-700 hover:bg-gray-100",
-                            "group ml-4  mr-6  flex rounded-xl  p-2 text-[16px] leading-6  ",
-                          )}
-                        >
-                          <div className="mx-1 flex w-full items-center gap-x-6 ">
-                            <div className=" ">
-                              {item.current
-                                ? item.icon(
-                                    "h-5 w-5 shrink-0  stroke-fuchsia-950 fill-black ",
-                                  )
-                                : item.icon(
-                                    "h-5 w-5 shrink-0  stroke-gray-950  group-hover:stroke-fuchsia-950",
-                                  )}
-                            </div>
-                            <p className="">{item.name} </p>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                {/*  */}
-                <span className="mx-3 my-3 border-t   "></span>
-                <p className="mx-6 px-3 py-1 text-base font-semibold">
-                  More from Youtube
-                </p>
-                {moreFromYoutube.map((item) => (
-                  <li className="mx-4 mt-auto">
-                    <Link
-                      href={`#`}
-                      className="group  flex items-center rounded-xl  p-2 text-[16px] leading-6 hover:bg-gray-100  "
-                    >
-                      {item.icon(
-                        "h-5 w-5 shrink-0  stroke-fuchsia-950 fill-black ml-1 mr-6  ",
-                      )}
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-                <span className="mx-3 my-3 border-t   "></span>
-                <li className="mt-auto">
-                  <Link
-                    href={`#`}
-                    className="group ml-4  mr-6  flex rounded-xl p-2 text-[16px] leading-6 hover:bg-gray-100  "
-                  >
-                    <div className="mx-1 flex w-full items-center gap-x-6">
-                      <Settings className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-fuchsia-950" />
-                      <p className={cn(closeSidebar ? "hidden" : "")}>
-                        Settings
-                      </p>
-                    </div>
-                  </Link>
-
-                  <Link
-                    href={`#`}
-                    className="group ml-4  mr-6  flex rounded-xl p-2 text-[16px] leading-6 hover:bg-gray-100  "
-                  >
-                    <div className="mx-1 flex w-full items-center gap-x-6">
-                      <Settings className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-fuchsia-950" />
-                      <p className={cn(closeSidebar ? "hidden" : "")}>
-                        Report history
-                      </p>
-                    </div>
-                  </Link>
-                  <Link
-                    href={`#`}
-                    className="group ml-4  mr-6  flex rounded-xl p-2 text-[16px] leading-6 hover:bg-gray-100  "
-                  >
-                    <div className="mx-1 flex w-full items-center gap-x-6">
-                      <HelpCircle className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-fuchsia-950" />
-                      <p className={cn(closeSidebar ? "hidden" : "")}>Help</p>
-                    </div>
-                  </Link>
-                  <Link
-                    href={`#`}
-                    className="group ml-4  mr-6  flex rounded-xl p-2 text-[16px] leading-6 hover:bg-gray-100  "
-                  >
-                    <div className="mx-1 flex w-full items-center gap-x-6">
-                      <Settings className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-fuchsia-950" />
-                      <p className={cn(closeSidebar ? "hidden" : "")}>
-                        Send feedback
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-
-                <span className="mx-3 my-3 border-t   "></span>
-                <li className="mx-6 mt-auto flex flex-wrap gap-x-2 text-sm ">
-                  {titleFooter.one.map((title) => (
-                    <Link href={`#`} key={title}>
-                      {title}
-                    </Link>
-                  ))}
-                </li>
-                <li className="mx-6  mt-auto flex flex-wrap gap-x-2 text-sm ">
-                  {titleFooter.two.map((title) => (
-                    <Link href={`#`} key={title}>
-                      {title}
-                    </Link>
-                  ))}
-                </li>
-              </ul>
-            </nav>
-
-            <div className="mx-6 w-fit">
-              <p className=" text-sm text-gray-500">© 2023 Google LLC</p>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* side base */}
-      {!isSidebarBaseVisible && (
-        <div
-          className={cn(
-            "fixed   bottom-0 left-0 top-14 hidden w-[70px]   bg-white  md:flex lg:z-30 lg:flex-col  ",
-            // closeSidebar ? "lg:w-[70px]" : "lg:w-[222px]",
-          )}
-        >
-          <div style={{}} className="  flex grow flex-col  gap-y-5     pb-4">
-            <nav className="my-3 flex flex-col  ">
-              <ul role="list" className="g flex flex-1 flex-col gap-y-3 ">
-                <li className="mt-auto">
-                  <ul role="list" className="mx-1 flex flex-col ">
-                    {desktopBaseNavigation.map((item) => (
-                      <li key={item.name}>
-                        <Link
-                          href={"#"}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (item.path === "sign-in") {
-                              void signIn();
-                            } else {
-                              void router.push(item.path ?? "/");
-                            }
-                          }}
-                          className={cn(
-                            item.current
-                              ? " text-primary-600  font-semibold  hover:bg-gray-200 "
-                              : " hover:text-primary-600 text-gray-700 hover:bg-gray-100",
-                            "group  flex  rounded-xl px-2 py-4  text-[16px] leading-6 ",
-                          )}
-                          // className={cn(
-                          //   "hover:text-primary-600 group    flex  rounded-xl px-2 py-6 text-[16px] leading-6 text-gray-700 hover:bg-gray-200 ",
-                          // )}
-                        >
-                          <div className="flex w-full items-center justify-center ">
-                            <div className="flex flex-col items-center justify-center">
-                              {item.current
-                                ? item.icon(
-                                    "h-6 w-6 shrink-0  stroke-fuchsia-950 fill-black ",
-                                  )
-                                : item.icon(
-                                    "h-6 w-6 shrink-0  stroke-gray-950  group-hover:stroke-fuchsia-950",
-                                  )}
-                              <p className="text-[10px] font-medium">
-                                {item.name}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      )}
       // Sidebar mobile
-      <Transition.Root
-        show={(isTablet && isOpen) || (isSidebarBaseVisible && isOpen)}
-        as={Fragment}
-      >
+      <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
-          // className="relative z-50 h-full xl:hidden"
-          className={cn(
-            isSidebarBaseVisible ? "" : "xl:hidden",
-            "relative z-50 h-full ",
-          )}
+          className={cn(isSidebarBaseVisible ? "" : "xl:hidden" ,"relative z-50 h-full ")}
           onClose={setSidebarOpen}
         >
           <Transition.Child
@@ -469,9 +228,10 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
                 <div className="z-50 mx-4 flex max-w-[240px]  items-center justify-start bg-white ">
                   {/* menu */}
                   <button
-                    className={`${
-                      isMobile ? "hidden" : ""
-                    }  cursor-pointer p-2 hover:rounded-full  hover:bg-gray-200 `}
+                    className={cn(
+                      isMobile ? "hidden" : "",
+                      " cursor-pointer p-2 hover:rounded-full  hover:bg-gray-200",
+                    )}
                     onClick={() => setSidebarOpen(!isOpen)}
                   >
                     <Menu className="h-6 w-6" aria-hidden="true" />
@@ -686,4 +446,4 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default SideBarMobile;
