@@ -52,9 +52,10 @@ interface VideoComponentProps {
     views: number;
   }[];
   users: {
-    image: string;
+    image?: string;
     name: string;
   }[];
+  isNotUserImage?: boolean;
   refetch?: () => Promise<unknown>;
   isLoading?: boolean;
 }
@@ -62,6 +63,8 @@ interface VideoComponentProps {
 export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
   videos,
   users,
+  isNotUserImage,
+
   // isLoading,
 }) => {
   // console.log(videos);
@@ -72,7 +75,9 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
     // <div className="grid h-full grid-cols-1 gap-y-8 overflow-hidden sm:mx-4 sm:grid-cols-2 md:gap-x-1 md:gap-y-8 lg:grid-cols-3    xl:grid-cols-3 2xl:grid-cols-4 2xl:gap-x-1 3xl:grid-cols-5">
     <>
       {/* {isLoading && <CardSkeleton cards={30} />} */}
-      <SliderTabs isFixed className="top-12 xs:top-14  md:top-14" />
+      {!isNotUserImage && (
+        <SliderTabs isFixed className="top-12 xs:top-14  md:top-14" />
+      )}
 
       {videos?.map((video, index) => {
         const user = users[index];
@@ -87,7 +92,16 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
           >
             <div className="w-full space-y-5 rounded-md p-2 ">
               <div className="flex flex-col gap-y-2">
-                <div className="relative rounded-xl bg-gray-600  py-28 md:py-28 lg:py-[88px]">
+                {/* <div className="relative rounded-xl bg-gray-600  py-28 md:py-28 lg:py-[88px]"> */}
+                <div
+                  className={`relative rounded-xl bg-gray-600  
+                  ${
+                    isNotUserImage
+                      ? "py-16 md:py-16 lg:py-16"
+                      : "py-28 md:py-28 lg:py-[88px] "
+                  }
+                  `}
+                >
                   {/* <Image src={video.thumbnailUrl} alt={video.title} fill className="object-cover w-full" /> */}
                   <Thumbnail
                     thumbnailUrl={video.thumbnailUrl}
@@ -96,7 +110,12 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
                 </div>
                 <div className="flex gap-x-2  ">
                   {/* <div className="rounded-full bg-gray-600 p-6"> */}
-                  <UserImage image={user?.image} className="h-8 w-8 p-4" />
+                  {!isNotUserImage && (
+                    <UserImage
+                      image={user?.image ?? ""}
+                      className="h-8 w-8 p-4"
+                    />
+                  )}
                   {/* </div> */}
                   <div className="flex w-full flex-col gap-y-2 lg:gap-y-1">
                     <div className="max-w-[90%] rounded-sm  ">
@@ -458,7 +477,7 @@ export const UserImage = ({
   image,
   className = "",
 }: {
-  image: string;
+  image?: string;
   className?: string;
 }) => {
   return (
@@ -468,7 +487,7 @@ export const UserImage = ({
       }`}
     >
       <Image
-        src={image || "/profile.png"}
+        src={image ?? "/profile.png"}
         className="absolute inset-0 rounded-full  bg-gray-200 object-cover"
         alt=""
         fill

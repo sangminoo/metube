@@ -1,0 +1,19 @@
+import { type NextPage } from "next";
+import Layout from "~/components/Layout";
+import { ProfileHeader } from "~/components/Components";
+
+const Featured: NextPage = () => {
+  return (
+    <>
+      <Layout>
+        <div className="py-3">
+          <ProfileHeader />
+
+          
+        </div>
+      </Layout>
+    </>
+  );
+};
+
+export default Featured;

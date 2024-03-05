@@ -18,6 +18,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Shorts from "./Icons/Shorts";
 import useIsTablet from "~/utils/useIsTablet";
 import useIsMobile from "~/utils/useIsMobile";
+import UserChannel from "./Icons/UserChannel";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -64,6 +65,12 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
       path: userId ? `/${String(userId)}/profile-following` : "sign-in",
       icon: (className: string) => <Subscriptions className={className} />,
       current: router.pathname === `/${String(userId)}/profile-following`,
+    },
+    {
+      name: "Your channel",
+      path: userId ? `/${String(userId)}/ProfileVideos` : "sign-in",
+      icon: (className: string) => <UserChannel className={className} />,
+      current: router.pathname === `/${String(userId)}/profile-playlists`,
     },
     {
       name: "Library",

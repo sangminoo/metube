@@ -1,4 +1,4 @@
-import { EngagementType, PrismaClient } from "@prisma/client";
+import { EngagementType, type PrismaClient } from "@prisma/client";
 
 import { z } from "zod";
 
@@ -9,7 +9,7 @@ import {
 } from "~/server/api/trpc";
 
 type Context = {
-  prisma: PrismaClient;
+  db: PrismaClient;
 };
 
 async function getOrCreatePlaylist(
@@ -17,14 +17,14 @@ async function getOrCreatePlaylist(
   title: string,
   userId: string,
 ) {
-  let playlist = await ctx.prisma.playlist.findFirst({
+  let playlist = await ctx.db.playlist.findFirst({
     where: {
       title,
       userId,
     },
   });
   if (playlist === null || playlist === undefined) {
-    playlist = await ctx.prisma.playlist.create({
+    playlist = await ctx.db.playlist.create({
       data: {
         title,
         userId,
@@ -41,8 +41,8 @@ async function createEngagement(
   userId: string,
   type: EngagementType,
 ) {
-  return await ctx.prisma.videoEngagement.create({
-    data: { videoId: id, userId, engagementType: type },
+  return await ctx.db.videoEngagement.create({
+    data: { videoId: id, userId: userId, engagementType: type },
   });
 }
 
@@ -52,10 +52,10 @@ async function deleteEngagementIfExists(
   userId: string,
   type: EngagementType,
 ) {
-  return await ctx.prisma.videoEngagement.deleteMany({
+  return await ctx.db.videoEngagement.deleteMany({
     where: {
       videoId: id,
-      userId,
+      userId: userId,
       engagementType: type,
     },
   });
@@ -88,12 +88,12 @@ export const videoEngagementRouter = createTRPCRouter({
   addLike: protectedProcedure
     .input(z.object({ id: z.string(), userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      // await deleteEngagementIfExists(
-      //   ctx,
-      //   input.id,
-      //   input.userId,
-      //   EngagementType.DISLIKE,
-      // );
+      await deleteEngagementIfExists(
+        ctx,
+        input.id,
+        input.userId,
+        EngagementType.DISLIKE,
+      );
 
       const existingLike = await ctx.db.videoEngagement.findMany({
         where: {
@@ -135,35 +135,28 @@ export const videoEngagementRouter = createTRPCRouter({
       }
     }),
 
-  addDisliked: protectedProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        userId: z.string(),
-      }),
-    )
+    addDisliked: protectedProcedure
+    .input(z.object({ id: z.string(), userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       await deleteEngagementIfExists(
         ctx,
         input.id,
         input.userId,
-        EngagementType.LIKE,
+        EngagementType.LIKE
       );
 
       const existingDislike = await ctx.db.videoEngagement.findMany({
         where: {
-          id: input.id,
+          videoId: input.id,
           userId: input.userId,
           engagementType: EngagementType.DISLIKE,
         },
       });
-
       const playlist = await getOrCreatePlaylist(
         ctx,
-        "Liked videos",
-        input.userId,
+        "Liked Videos",
+        input.userId
       );
-
       await ctx.db.playlistHasVideo.deleteMany({
         where: {
           playlistId: playlist.id,
@@ -172,18 +165,18 @@ export const videoEngagementRouter = createTRPCRouter({
       });
 
       if (existingDislike.length > 0) {
-        return deleteEngagementIfExists(
+        return await deleteEngagementIfExists(
           ctx,
           input.id,
           input.userId,
-          EngagementType.DISLIKE,
+          EngagementType.DISLIKE
         );
       } else {
-        return createEngagement(
+        return await createEngagement(
           ctx,
           input.id,
           input.userId,
-          EngagementType.DISLIKE,
+          EngagementType.DISLIKE
         );
       }
     }),

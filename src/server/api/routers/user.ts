@@ -14,11 +14,11 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        viewerId: z.string(),
+        viewerId: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const user = ctx.db.user.findUnique({
+      const user = await ctx.db.user.findUnique({
         where: {
           id: input.id,
         },
@@ -38,8 +38,19 @@ export const userRouter = createTRPCRouter({
         },
       });
 
+      const videosQuantity = await ctx.db.video.count({
+        where: {
+          userId: user.id,
+        },
+      });
+
       let viewerHasFollowed = false;
-      const userWithEngagement = { ...user, followers, followings };
+      const userWithEngagement = {
+        ...user,
+        followers,
+        followings,
+        videosQuantity,
+      };
 
       if (input.viewerId && input.viewerId !== "") {
         viewerHasFollowed = !!(await ctx.db.followEngagement.findFirst({
@@ -54,6 +65,7 @@ export const userRouter = createTRPCRouter({
       };
       return { user: userWithEngagement, viewer };
     }),
+
   addFollow: protectedProcedure
     .input(
       z.object({

@@ -49,6 +49,11 @@ export { default as Share } from "./Share";
 export { default as Heart } from "./Heart";
 export { default as FaceSmile } from "./FaceSmile";
 export { default as SavePlus } from "./SavePlus";
+export { default as UserChannel } from "./UserChannel";
+export { default as Playlists } from "./Playlists";
+export { default as Global } from "./Global";
+export { default as Discussions } from "./Discussions";
+
 export { RedTrash } from "./RedTrash";
 export {
   GreenPlay,

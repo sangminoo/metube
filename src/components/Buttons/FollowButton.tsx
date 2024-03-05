@@ -1,6 +1,6 @@
 import { cn } from "lib/untils";
 import { signIn, useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { BellRing, ArrowDown } from "../Icons/Icons";
 
@@ -27,6 +27,8 @@ const FollowButton = ({
   });
 
   console.log(userIsFollow);
+
+
 
   const addFollowMutation = api.user.addFollow.useMutation();
   const handleFollow = (input: { followerId: string; followingId: string }) => {

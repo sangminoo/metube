@@ -31,11 +31,11 @@ export function useEngagementButton({
     like: viewer.hasLiked,
     dislike: viewer.hasDisliked,
   });
-  console.log(userChoice);
-  console.log(EngagementData);
-  console.log(viewer);
+  // console.log(userChoice);
+  // console.log(EngagementData);
+  // console.log(viewer);
 
-  console.log(likeCount);
+  // console.log(likeCount);
   const handleEngagement =
     (
       engagementType: EngagementType,
