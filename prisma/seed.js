@@ -13,7 +13,7 @@ const {
 
 const prisma = new PrismaClient();
 
-const cloudinaryName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "";
+const cloudinaryName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "";
 
 function generateNextId(start, end) {
   let current = start;

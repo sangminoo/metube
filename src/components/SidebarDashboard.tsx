@@ -12,7 +12,7 @@ import { Fragment, useEffect, useState } from "react";
 import Settings from "./Icons/Settings";
 import HelpCircle from "./Icons/HelpCircle";
 import { Logo } from "./Icons/Logo";
-import Youtube from "./Icons/Youtube";
+import Youtube from "./Icons/youtube";
 import Trending from "./Icons/Trending";
 import { Dialog, Transition } from "@headlessui/react";
 import Shorts from "./Icons/Shorts";
@@ -33,7 +33,11 @@ interface NavigationItem {
   current: boolean;
 }
 
-const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
+const SidebarDashboard = ({
+  setSidebarOpen,
+  isOpen,
+  closeSidebar,
+}: SidebarProps) => {
   const isTablet = useIsTablet();
   const isMobile = useIsMobile();
   // console.log(isTablet);
@@ -202,7 +206,10 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
         <div
           className={cn(
             "bottom-0 top-14   hidden lg:fixed lg:z-40 lg:flex lg:flex-col ",
-            closeSidebar ? "lg:w-[70px]" : "lg:w-60" || closeSidebar && !isSidebarBaseVisible && "lg:w-0",
+            closeSidebar
+              ? "lg:w-[70px]"
+              : "lg:w-60" ||
+                  (closeSidebar && !isSidebarBaseVisible && "lg:w-0"),
           )}
         >
           <div className=" scrollbarBase flex grow flex-col  gap-y-5   overflow-y-auto  bg-white  pb-4">
@@ -693,4 +700,4 @@ const Sidebar = ({ setSidebarOpen, isOpen, closeSidebar }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default SidebarDashboard;

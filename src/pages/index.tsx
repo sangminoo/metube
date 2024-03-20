@@ -5,8 +5,9 @@ import ErrorPage from "~/components/Error";
 import { api } from "~/utils/api";
 import CardSkeleton from "~/components/CardSkeleton";
 import { useEffect } from "react";
+import { type NextPage } from "next";
 
-export default function Home() {
+const Home: NextPage = () => {
   // const hello = api.post.hello.useQuery({ text: "from tRPC" });
 
   const res = api.video.getRandomVideos.useQuery(40, { enabled: false });
@@ -77,7 +78,8 @@ export default function Home() {
       </Layout>
     </>
   );
-}
+};
+export default Home;
 
 // function AuthShowcase() {
 //   const { data: sessionData } = useSession();

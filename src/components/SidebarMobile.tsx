@@ -12,7 +12,7 @@ import { Fragment, useEffect, useState } from "react";
 import Settings from "./Icons/Settings";
 import HelpCircle from "./Icons/HelpCircle";
 import { Logo } from "./Icons/Logo";
-import Youtube from "./Icons/youtube";
+import Youtube from "./Icons/Youtube";
 import Trending from "./Icons/Trending";
 import { Dialog, Transition } from "@headlessui/react";
 import Shorts from "./Icons/Shorts";

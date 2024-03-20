@@ -118,10 +118,13 @@ const Navbar = ({ children }: NavbarProps) => {
 
   const handleSearch = async () => {
     try {
+     
+      
       await router.push({
         pathname: "/SearchPage",
         query: { q: SearchInput },
       });
+
     } catch (error) {
       console.log("Something went wrong to search page", error);
     }
@@ -137,6 +140,7 @@ const Navbar = ({ children }: NavbarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       void handleSearch();
+
     }
   };
   return (
@@ -214,6 +218,7 @@ const Navbar = ({ children }: NavbarProps) => {
                   onFocus={handleInputFocus}
                   onBlur={handleInputBlur}
                   type="search"
+                  value={SearchInput}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setSearchInput(e.target.value)
                   }

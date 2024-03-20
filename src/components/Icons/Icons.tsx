@@ -27,7 +27,8 @@ export { default as Menu } from "./Menu";
 export { default as Micro } from "./Micro";
 export { default as Keyboard } from "./Keyboard";
 export { default as Subscriptions } from "./Subscriptions";
-export { default as Youtube } from "./youtube";
+export { default as Youtube } from "./Youtube";
+export { default as YoutubeWhite } from "./YoutubeWhite";
 export { default as Trending } from "./Trending";
 export { default as Notifications } from "./Notifications";
 export { default as Camera } from "./Camera";
@@ -53,6 +54,10 @@ export { default as UserChannel } from "./UserChannel";
 export { default as Playlists } from "./Playlists";
 export { default as Global } from "./Global";
 export { default as Discussions } from "./Discussions";
+export { default as UploadVideo } from "./UploadVideo";
+export { default as UpVideo } from "./UpVideo";
+export { default as YoutubeBase } from "./YoutubeBase";
+export { default as Copy } from "./Copy";
 
 export { RedTrash } from "./RedTrash";
 export {

@@ -3,8 +3,8 @@ export default function Youtube(props: React.SVGProps<SVGSVGElement>) {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-    //   width="256"
-    //   height="180"
+      //   width="256"
+      //   height="180"
       viewBox="0 0 256 180"
     >
       <path

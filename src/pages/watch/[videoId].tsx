@@ -88,7 +88,7 @@ const VideoPage: NextPage = () => {
         userId: sessionData ? sessionData.user.id : "",
       });
     }
-  }, [videoId]);
+  }, [videoId ]);
 
   useEffect(() => {
     if (!sidebarVideos) {

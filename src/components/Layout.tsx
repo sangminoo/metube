@@ -6,18 +6,20 @@ import { cn } from "lib/untils";
 
 import Footer from "./Footer";
 import { usePathname } from "next/navigation";
+import SidebarDashboard from "./SidebarDashboard";
 
 interface LayoutProps {
   children: JSX.Element;
   closeSidebar?: boolean;
+  isDashboard?: boolean;
 }
 
-const Layout = ({ children, closeSidebar }: LayoutProps) => {
+const Layout = ({ children, closeSidebar, isDashboard }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isSidebarBaseVisible, setIsSidebarBaseVisible] = useState(false);
 
   const pathname = usePathname();
-  const isWatch = (pathname || "").includes("/watch") ;
+  const isWatch = (pathname || "").includes("/watch");
   // console.log(sidebarOpen);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
 
   return (
     <div className="overflow-hidden">
-      <Navbar>
+      <Navbar isDashboard>
         <button
           className={`${
             isMobile ? "hidden" : ""
@@ -79,11 +81,21 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
         </button>
       </Navbar>
 
-      <Sidebar
-        isOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        closeSidebar={closeSidebar}
-      />
+      {!isDashboard && (
+        <Sidebar
+          isOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          closeSidebar={closeSidebar}
+        />
+      )}
+
+      {isDashboard && (
+        <SidebarDashboard
+          isOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          closeSidebar={closeSidebar}
+        />
+      )}
 
       {/* <SideBarMobile 
         isOpen={sidebarOpen}
@@ -101,7 +113,9 @@ const Layout = ({ children, closeSidebar }: LayoutProps) => {
           sidebarOpen
             ? `md:pl-[64px] ${
                 // pathname.includes("/watch") ?? undefined
-                isSidebarBaseVisible ? "xl:pl-[64px] md:pl-[0px]" : "xl:pl-[232px]"
+                isSidebarBaseVisible
+                  ? "md:pl-[0px] xl:pl-[64px]"
+                  : "xl:pl-[232px]"
               } `
             : `${
                 // pathname.includes("/watch") ?? undefined
