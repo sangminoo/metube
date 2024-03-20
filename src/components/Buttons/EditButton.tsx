@@ -91,9 +91,9 @@ const EditButton = ({
       id: video.id,
       // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
       userId: sessionData?.user.id as string,
-      title: video.title || undefined,
-      description: video.description || undefined,
-      thumbnailUrl: video.thumbnailUrl || undefined,
+      title: video.title ?? "",
+      description: video.description ?? "",
+      thumbnailUrl: video.thumbnailUrl ?? "",
     };
 
     const formData = new FormData();
@@ -124,7 +124,7 @@ const EditButton = ({
           // only include title and description if they've changed
           if (user.title !== video.title) newVideoData.title = user.title;
           if (user.description !== video.description)
-            newVideoData.description = user.description;
+            newVideoData.description = user.description ?? "";
 
           console.log(newVideoData);
 
