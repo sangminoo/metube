@@ -6,7 +6,6 @@ import ErrorPage from "~/components/Error";
 import Layout from "~/components/Layout";
 import { MultiColumnPlaylist } from "~/components/PlaylistComponents";
 import ProfileHeader from "~/components/ProfileHeader";
-import { Tabs } from "~/components/Tabs";
 import { api } from "~/utils/api";
 
 const Playlists: NextPage = () => {
@@ -51,9 +50,9 @@ const Playlists: NextPage = () => {
               playlists={data?.map((playlist) => ({
                 id: playlist.id,
                 title: playlist.title,
-                description: playlist.description || "",
+                description: playlist.description ?? "",
                 videoCount: playlist.videoCount,
-                playlistThumbnail: playlist?.playlistThumbnail || "",
+                playlistThumbnail: playlist?.playlistThumbnail ?? "",
                 createdAt: playlist.createdAt,
               }))}
               isUser={isUser}

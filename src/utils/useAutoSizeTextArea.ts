@@ -5,7 +5,6 @@ const useAutoSizeTextArea = (
   id: string,
   textAreaRef: HTMLTextAreaElement | null,
   value: string,
-  minTextareaHeight?: number,
 ) => {
   // this will calculate the height of textArea before DOM paints
   useLayoutEffect(() => {

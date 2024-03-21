@@ -5,7 +5,6 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import ErrorPage from "~/components/Error";
 import { useSession } from "next-auth/react";
-import { Tabs } from "~/components/Tabs";
 
 const ProfileVideos: NextPage = () => {
   const router = useRouter();
@@ -70,14 +69,14 @@ const ProfileVideos: NextPage = () => {
               <MuliColumnVideo
                 videos={data?.videos.map((video) => ({
                   id: video?.id,
-                  title: video?.title || "",
-                  thumbnailUrl: video?.thumbnailUrl || "",
-                  createdAt: video?.createdAt || new Date(),
-                  views: video?.views || 0,
+                  title: video?.title ?? "",
+                  thumbnailUrl: video?.thumbnailUrl ?? "",
+                  createdAt: video?.createdAt ?? new Date(),
+                  views: video?.views ?? 0,
                 }))}
                 users={data?.users.map((user) => ({
-                  name: user?.name || "",
-                  image: user?.image || "",
+                  name: user?.name ?? "",
+                  image: user?.image ?? "",
                 }))}
                 isNotUserImage
               />

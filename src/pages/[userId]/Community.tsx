@@ -1,6 +1,5 @@
 import moment from "moment";
 import { useSession } from "next-auth/react";
-import { RSC_PREFETCH_SUFFIX } from "next/dist/lib/constants";
 import { useRouter } from "next/router";
 import { type NextPage } from "next/types";
 import { useState } from "react";
@@ -10,7 +9,6 @@ import ErrorPage from "~/components/Error";
 import Hashtags from "~/components/Hashtags";
 import Discussions from "~/components/Icons/Discussions";
 import Layout from "~/components/Layout";
-import PostCommunity from "~/components/PostCommunity";
 import ProfileHeader from "~/components/ProfileHeader";
 import { api } from "~/utils/api";
 
@@ -27,6 +25,7 @@ const Announcements: NextPage = () => {
     });
 
   const announcements = data?.announcements;
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   const errorTypes = error || announcements?.length == 0 || !data;
   const Error = () => {
     if (isLoading) {

@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import ErrorPage from "~/components/Error";
 import Layout from "~/components/Layout";
 import { PlaylistPage } from "~/components/PlaylistComponents";
@@ -20,7 +19,7 @@ const History: NextPage = () => {
   const Error = () => {
     if (isLoading) {
       return <>Loading...</>;
-    } else if (error || !data) {
+    } else if (error ?? !data) {
       return (
         <ErrorPage
           title="No Current History"
@@ -41,30 +40,30 @@ const History: NextPage = () => {
           ) : (
             <PlaylistPage
               authors={data?.authors?.map((author) => ({
-                id: author?.id || "",
-                name: author?.name || "",
-                image: author?.image || "",
+                id: author?.id ?? "",
+                name: author?.name ?? "",
+                image: author?.image ?? "",
               }))}
               videos={data?.videos.map((video) => ({
-                id: video?.id || "",
-                title: video?.title || "",
-                thumbnailUrl: video?.thumbnailUrl || "",
-                createdAt: video?.createdAt || new Date(),
-                views: video?.views || 0,
+                id: video?.id ?? "",
+                title: video?.title ?? "",
+                thumbnailUrl: video?.thumbnailUrl ?? "",
+                createdAt: video?.createdAt ?? new Date(),
+                views: video?.views ?? 0,
               }))}
               playlist={{
-                id: data.playlist?.id || "",
-                title: data.playlist?.title || "",
-                description: data.playlist?.description || "",
-                videoCount: data.videos.length || 0,
-                playlistThumbnail: data.videos[0]?.thumbnailUrl || "",
-                createdAt: data.playlist?.createdAt || new Date(),
+                id: data.playlist?.id ?? "",
+                title: data.playlist?.title ?? "",
+                description: data.playlist?.description ?? "",
+                videoCount: data.videos.length ?? 0,
+                playlistThumbnail: data.videos[0]?.thumbnailUrl ?? "",
+                createdAt: data.playlist?.createdAt ?? new Date(),
               }}
               user={{
-                id: data?.user?.id || "",
-                image: data?.user?.image || "",
-                name: data?.user?.name || "",
-                followers: data?.user?.followers || 0,
+                id: data?.user?.id ?? "",
+                image: data?.user?.image ?? "",
+                name: data?.user?.name ?? "",
+                followers: data?.user?.followers ?? 0,
               }}
             />
           )}

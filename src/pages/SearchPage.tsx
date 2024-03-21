@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Layout, MuliColumnVideo } from "~/components/Components";
+import { Layout } from "~/components/Components";
 import ErrorPage from "~/components/Error";
 
 import { api } from "~/utils/api";

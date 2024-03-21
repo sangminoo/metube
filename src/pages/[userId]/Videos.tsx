@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Layout from "~/components/Layout";
-import { MuliColumnVideo, ProfileHeader } from "~/components/Components";
+import {  ProfileHeader } from "~/components/Components";
 
 const Videos: NextPage = () => {
   return (
@@ -8,8 +8,6 @@ const Videos: NextPage = () => {
       <Layout>
         <div className="py-3">
           <ProfileHeader />
-
-        
         </div>
       </Layout>
     </>
