@@ -1,21 +1,23 @@
 import { cn } from "lib/untils";
-import Home from "./Icons/Home";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
-import ClockRewind from "./Icons/ClockRewind";
-import Menu from "./Icons/Menu";
-import ThumbsUp from "./Icons/ThumbsUp";
-import Folder from "./Icons/Folder";
-import Subscriptions from "./Icons/Subscriptions";
 import { Fragment, useEffect, useState } from "react";
-import Settings from "./Icons/Settings";
-import HelpCircle from "./Icons/HelpCircle";
-import { Logo } from "./Icons/Logo";
-import Youtube from "./Icons/youtube";
-import Trending from "./Icons/Trending";
+import {
+  Youtube,
+  Logo,
+  HelpCircle,
+  Settings,
+  Folder,
+  ThumbsUp,
+  Menu,
+  ClockRewind,
+  Home,
+  Shorts,
+  Subscriptions,
+  Trending,
+} from "./Icons/Icons";
 import { Dialog, Transition } from "@headlessui/react";
-import Shorts from "./Icons/Shorts";
 import useIsTablet from "~/utils/useIsTablet";
 import useIsMobile from "~/utils/useIsMobile";
 import UserChannel from "./Icons/UserChannel";

@@ -5,7 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Table from "~/components/Icons/Table";
+import Table from "~/components/Table";
 import UploadVideo from "~/components/Icons/UploadVideo";
 import Layout from "~/components/Layout";
 import UploadVideoDialog from "~/components/Buttons/UploadVideoDialog";
@@ -181,7 +181,7 @@ const Dashboard: NextPage = () => {
                   <h2 className="px-6 pt-4 text-xl font-bold ">
                     Channel content
                   </h2>
-                  <Table videos={videos} refetch={refetch} />
+                  <Table videos={videos ?? []} refetch={refetch} />
                 </div>
               </div>
             </div>

@@ -19,11 +19,11 @@ const EditButton = ({
 }: {
   video: {
     id: string;
-    title: string;
-    description?: string;
-    thumbnailUrl?: string;
+    title: string | null;
+    description?: string | null;
+    thumbnailUrl?: string | null;
     publish?: boolean;
-    videoUrl: string;
+    videoUrl?: string;
   };
   refetch: () => Promise<unknown>;
 }) => {
@@ -122,11 +122,11 @@ const EditButton = ({
           };
 
           // only include title and description if they've changed
-          if (user.title !== video.title) newVideoData.title = user.title;
+          if (user.title !== video.title) newVideoData.title = user.title ?? "";
           if (user.description !== video.description)
             newVideoData.description = user.description ?? "";
 
-          console.log(newVideoData);
+          // console.log(newVideoData);
 
           addVideoUpdateMutation.mutate(newVideoData, {
             onSuccess: () => {
@@ -221,7 +221,7 @@ const EditButton = ({
                                   id="default_filled"
                                   className="peer block w-full appearance-none rounded-t-lg border-0 border-b-2 border-gray-300 bg-gray-50 px-2.5 pb-2.5 pt-5 text-xl text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
                                   placeholder=" "
-                                  value={user.title}
+                                  value={user.title ?? ""}
                                   name="title"
                                   onChange={handleInputChange}
                                 />
@@ -336,7 +336,7 @@ const EditButton = ({
                             <div className="relative  mb-4 h-40 min-w-full ">
                               {/* <div className=" h-44 w-full rounded-tl-md  rounded-tr-md bg-gray-200"></div> */}
                               <img
-                                src={video?.thumbnailUrl}
+                                src={video?.thumbnailUrl ?? ""}
                                 alt=""
                                 className="absolute inset-0  w-full   rounded-tl-md rounded-tr-md object-fill"
                               />
@@ -393,9 +393,11 @@ const EditButton = ({
                   {currentPage === 2 && (
                     <>
                       <ImageCropper
-                        image={image}
                         setCurrentPage={setCurrentPage}
                         setCroppedImage={setCroppedImage}
+                        image={image}
+                        handleSubmit={handleSubmit}
+                        setIsOpen={setIsOpen}
                       />
                     </>
                   )}
@@ -420,7 +422,8 @@ export const ImageCropper = ({
   setIsOpen,
 }: {
   setCurrentPage: (page: number) => void;
-  image: (image: string) => void;
+  // image: (image: string) => void;
+  image: File | null;
   handleSubmit: (croppedDataUrl: string) => void;
   setCroppedImage: (image: string) => void;
   imageType?: "backgroundImage" | "image";
@@ -429,7 +432,8 @@ export const ImageCropper = ({
   interface CropperImageElement extends HTMLElement {
     cropper?: Cropper;
   }
-  const cropperRef = useRef<CropperImageElement>(null);
+  const cropperRef = useRef<CropperImageElement | undefined>(null);
+  // console.log(cropperRef);
 
   const cropImage = () => {
     if (cropperRef.current && cropperRef.current !== null) {
@@ -465,7 +469,7 @@ export const ImageCropper = ({
                 style={{ height: "100%", width: "100%" }}
                 aspectRatio={imageType === "image" ? 1 : 16 / 9}
                 guides={false}
-                ref={cropperRef}
+                ref={cropperRef as React.RefObject<HTMLImageElement>}
               />
               <div className="mt-5 flex justify-end gap-2">
                 <Button variant="secondary-gray" size="lg" onClick={cancelCrop}>

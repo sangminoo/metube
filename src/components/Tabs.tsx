@@ -20,13 +20,16 @@ export function Tabs({ tabsData }: TabsProps) {
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
   const [isSearch, setIsSearch] = useState(false);
   const router = useRouter();
-  const tabsRef = useRef([]);
-  const inputRef = useRef(null);
+  const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     function setTabPosition() {
       const currentTab = tabsRef.current[activeTabIndex];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setTabUnderlineLeft(currentTab?.offsetLeft ?? 0);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       setTabUnderlineWidth(currentTab?.clientWidth ?? 0);
     }
 
@@ -37,8 +40,11 @@ export function Tabs({ tabsData }: TabsProps) {
   }, [activeTabIndex]);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node | null)
+      ) {
         setIsSearch(false);
       }
     }
@@ -56,7 +62,7 @@ export function Tabs({ tabsData }: TabsProps) {
     <div>
       <div className="relative">
         <nav className="flex items-center gap-x-3 space-x-3 border-b">
-          {tabsData.map((tab, idx) => {
+          {tabsData?.map((tab, idx) => {
             const isTabActive = idx === activeTabIndex;
             return (
               <Link
@@ -97,7 +103,7 @@ export function Tabs({ tabsData }: TabsProps) {
         <span className="absolute bottom-0  mb-[1px] h-[2px] rounded-full transition-all duration-300 hover:bg-gray-200" />
       </div>
       <div className="py-4">
-        <p>{tabsData[activeTabIndex].content}</p>
+        <p>{tabsData[activeTabIndex]?.content}</p>
       </div>
     </div>
   );

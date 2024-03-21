@@ -88,7 +88,7 @@ const VideoPage: NextPage = () => {
         userId: sessionData ? sessionData.user.id : "",
       });
     }
-  }, [videoId ]);
+  }, [videoId]);
 
   useEffect(() => {
     if (!sidebarVideos) {
@@ -96,8 +96,13 @@ const VideoPage: NextPage = () => {
     }
   }, []);
 
+  if (!videoData || !("video" in videoData)) {
+    // Nếu videoData không tồn tại hoặc không có trường 'video'
+    return <p>Loading...</p>; // hoặc hiển thị thông báo lỗi
+  }
+
+  // const [isSubscribe, setIsSubscribe] = useState(false);
   const video = videoData?.video;
-  const [isSubscribe, setIsSubscribe] = useState(false);
 
   const user = videoData?.user;
   const viewer = videoData?.viewer;
@@ -146,7 +151,7 @@ const VideoPage: NextPage = () => {
     <>
       <Head>
         <title>{video?.title}</title>
-        <meta name="description" content={user?.description || ""} />
+        <meta name="description" content={user?.description ?? ""} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout closeSidebar={true}>
@@ -175,7 +180,7 @@ const VideoPage: NextPage = () => {
                           <Link href={`/${video?.userId}/ProfileVideos`}>
                             <div className={cn(isMobile ? "pr-2" : "pr-4")}>
                               <UserImage
-                                image={user?.image || ""}
+                                image={user?.image ?? ""}
                                 className="h-9 w-9"
                               />
                             </div>
@@ -246,7 +251,7 @@ const VideoPage: NextPage = () => {
                             <Share className="h-6 w-6" />
                             Share
                           </button>
-                          <SaveButton videoId={videoId} />
+                          <SaveButton videoId={videoId as string} />
                           <button className="rounded-full bg-gray-100 px-4 py-2">
                             More
                           </button>
@@ -270,11 +275,11 @@ const VideoPage: NextPage = () => {
                       </div>
                       <div className="w-full">
                         <Collapsible
-                          description={video?.description}
-                          userId={video?.userId}
-                          userName={user?.name}
-                          userImageUrl={user?.image}
-                          followers={user?.followers}
+                          description={video?.description ?? ""}
+                          userId={video?.userId ?? ""}
+                          userName={user?.name ?? ""}
+                          userImageUrl={user?.image ?? ""}
+                          followers={user?.followers ?? ""}
                         />
                       </div>
                     </div>
@@ -288,7 +293,7 @@ const VideoPage: NextPage = () => {
                     {videoData?.comments && (
                       <CommentSection
                         userVideoId={videoData.user.id}
-                        userVideoImageUrl={videoData.user.image}
+                        userVideoImageUrl={videoData.user.image  ?? ""}
                         videoId={video.id}
                         comments={videoData?.comments?.map(
                           ({ user, comment }) => ({

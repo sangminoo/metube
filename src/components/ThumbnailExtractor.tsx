@@ -3,7 +3,7 @@ import { useState } from "react";
 const ThumbnailExtractor = ({ videoUrl }: { videoUrl: string }) => {
   console.log(videoUrl);
   
-  const [thumbnailUrl, setThumbnailUrl] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
   const extractThumbnail = () => {
     const video = document.createElement("video");
@@ -14,7 +14,7 @@ const ThumbnailExtractor = ({ videoUrl }: { videoUrl: string }) => {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
       const dataUrl = canvas.toDataURL("image/jpeg");
       setThumbnailUrl(dataUrl);
     });

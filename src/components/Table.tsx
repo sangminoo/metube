@@ -1,37 +1,35 @@
 import Image from "next/image";
-import Global from "./Global";
-import PublishedButton from "../Buttons/PublishedButton";
+import PublishedButton from "./Buttons/PublishedButton";
 import { formatDate } from "lib/untils";
-import { DetailPopover } from "../DetailPopover";
+import { DetailPopover } from "./DetailPopover";
 import { useState } from "react";
 import {
   CommentButton,
   DeleteButton,
   EditButton,
   YoutubeButton,
-} from "../Buttons/Buttons";
-import DotsVertical from "./DotsVertical";
+} from "./Buttons/Buttons";
+import DotsVertical from "./Icons/DotsVertical";
 
 interface TableProps {
   videos: {
     id: string;
-    title: string;
-    thumbnailUrl: string;
-    description: string;
+    title: string | null;
+    thumbnailUrl: string | null;
+    description: string | null;
     likes: number;
     dislikes: number;
     views: number;
     comments: number;
-    createdAt: string;
+    createdAt: Date;
   }[];
   refetch: () => Promise<unknown>;
 }
 
 const Table = ({ videos, refetch }: TableProps) => {
   // console.log(title);
-  console.log(videos);
+  // console.log(videos);
   const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
- 
 
   return (
     <>
@@ -110,7 +108,7 @@ const Table = ({ videos, refetch }: TableProps) => {
                   <PublishedButton video={video} />
                 </td>
                 <td>
-                  <span>{formatDate(video?.createdAt)}</span>{" "}
+                  <span>{formatDate(video.createdAt.toString())}</span>{" "}
                   <p className="text-xs text-gray-500">Upload date</p>
                 </td>
                 <th>

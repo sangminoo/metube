@@ -4,7 +4,6 @@ import { api } from "~/utils/api";
 import ErrorPage from "./Error";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import FollowButton from "./Buttons/FollowButton";
 import { Tabs } from "~/components/Tabs";
 
@@ -106,7 +105,7 @@ const ProfileHeader = () => {
               <div className="h-52 w-full   ">
                 <div className="relative h-full w-full rounded-xl ">
                   {!channel.backgroundImage ? (
-                    <div className="absolute inset-0  rounded-xl object-cover bg-white">
+                    <div className="absolute inset-0  rounded-xl bg-white object-cover">
                       {" "}
                     </div>
                   ) : (
@@ -154,7 +153,7 @@ const ProfileHeader = () => {
                 <div className="-ml-8">
                   <FollowButton
                     viewerId={sessionData?.user.id ?? ""}
-                    followingId={userId ?? ""}
+                    followingId={userId as string}
                     viewer={viewer}
                   />
                 </div>

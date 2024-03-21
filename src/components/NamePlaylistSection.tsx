@@ -33,7 +33,7 @@ interface NamePlaylistSectionProps {
   userVideoId?: string;
   userVideoImageUrl?: string;
   videoId: string;
-  comments: Comment[];
+  comments?: Comment[];
   refetchPlaylists: () => Promise<unknown>;
   playlists: Playlist[];
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,7 +71,7 @@ const NamePlaylistSection = ({
 
   useAutoSizeTextArea("title-input", textAreaRef.current, newPlaylistName);
 
-  const handleOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setNewPlaylistName(value);
   };

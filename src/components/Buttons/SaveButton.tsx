@@ -150,8 +150,7 @@ const SaveButton = ({ videoId }: { videoId: string }) => {
                     videoId={videoId}
                     playlists={playlists ?? []}
                     setIsOpen={setIsOpen}
-                    refetchPlaylists={refetchPlaylists}
-                  />
+                    refetchPlaylists={refetchPlaylists} comments={[]}                  />
 
                   {/* <div >
                     <div className="relative h-11 w-full min-w-[200px]">

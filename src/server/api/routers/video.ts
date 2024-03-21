@@ -308,18 +308,18 @@ export const videoRouter = createTRPCRouter({
       const videosWithUser = await ctx.db.video.findMany({
         where: {
           publish: true,
-          // title: {
-          //   contains: input,
-          //   mode: "insensitive",
-          // },
-          OR: [
-            ...input.split(" ").map((word) => ({
-              title: {
-                contains: word,
-                mode: "insensitive",
-              },
-            })),
-          ],
+          title: {
+            contains: input,
+            mode: "insensitive",
+          },
+          // OR: [
+          //   ...input.split(" ").map((word) => ({
+          //     title: {
+          //       contains: word,
+          //       mode: "insensitive",
+          //     } ,
+          //   })),
+          // ],
         },
         include: {
           user: true,

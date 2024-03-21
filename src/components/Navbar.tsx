@@ -24,6 +24,7 @@ import useIsMobile from "~/utils/useIsMobile";
 
 interface NavbarProps {
   children: React.ReactNode;
+  isDashboard?: boolean
 }
 
 interface NavigationItem {

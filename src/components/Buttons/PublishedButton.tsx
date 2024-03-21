@@ -7,7 +7,7 @@ import { Global, Lock } from "../Icons/Icons";
 interface PublishedButton {
   video: {
     id: string;
-    publish: boolean;
+    publish?: boolean;
   };
 }
 function classNames(...classes: string[]) {

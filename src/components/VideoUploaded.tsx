@@ -18,11 +18,11 @@ interface VideoUploaded {
     description?: string;
     thumbnailUrl?: string;
     publish?: boolean;
-    videoUrl: string;
+    videoUrl?: string;
   };
 }
 
-const VideoUploaded = ({ video }) => {
+const VideoUploaded = ({ video }: VideoUploaded) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const { data: sessionData } = useSession();
@@ -35,6 +35,7 @@ const VideoUploaded = ({ video }) => {
 
   const URL = `${origin}${asPath}`;
   const baseURL = `${origin}`;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const textCopy = `${baseURL}/watch/${video?.id}`;
   async function copyText(entryText: string) {
     console.log(entryText);
@@ -42,8 +43,10 @@ const VideoUploaded = ({ video }) => {
     await navigator.clipboard.writeText(entryText);
   }
   const [user, setUser] = useState({
-    title: video.title,
-    description: video.description,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    title: video.title ?? "",
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    description: video.description ?? "",
   });
 
   const handleClick = () => {
@@ -121,6 +124,7 @@ const VideoUploaded = ({ video }) => {
                                   id="default_filled"
                                   className="peer block w-full appearance-none rounded-t-lg border-0 border-b-2 border-gray-300 bg-gray-50 px-2.5 pb-2.5 pt-5 text-xl text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
                                   placeholder=" "
+                                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                                   value={user.title}
                                   name="title"
                                   //   onChange={handleInputChange}

@@ -17,31 +17,31 @@ const Playlist: NextPage = () => {
       <Layout>
         <div className="md:mt-8">
           <PlaylistPage
-            authors={data?.authors?.map((author) => ({
-              id: author?.id || "",
-              name: author?.name || "",
-              image: author?.image || "",
+            authors={(data?.authors ?? []).map((author) => ({
+              id: author?.id ?? "",
+              name: author?.name ?? "",
+              image: author?.image ?? "",
             }))}
-            videos={data?.videos.map((video) => ({
-              id: video?.id || "",
-              title: video?.title || "",
-              thumbnailUrl: video?.thumbnailUrl || "",
-              createdAt: video?.createdAt || new Date(),
-              views: video?.views || 0,
+            videos={(data?.videos ?? []).map((video) => ({
+              id: video?.id ?? "",
+              title: video?.title ?? "",
+              thumbnailUrl: video?.thumbnailUrl ?? "",
+              createdAt: video?.createdAt ?? new Date(),
+              views: video?.views ?? 0,
             }))}
             playlist={{
-              id: playlist?.id || "",
-              title: playlist?.title || "",
-              description: playlist?.description || "",
-              videoCount: data?.videos.length || 0,
-              playlistThumbnail: data?.videos[0]?.thumbnailUrl || "",
+              id: playlist?.id ?? "",
+              title: playlist?.title ?? "",
+              description: playlist?.description ?? "",
+              videoCount: data?.videos.length ?? 0,
+              playlistThumbnail: data?.videos[0]?.thumbnailUrl ?? "",
               createdAt: playlist?.createdAt ?? new Date(),
             }}
             user={{
-              id: data?.user?.id || "",
-              image: data?.user?.user?.image || "",
-              name: data?.user?.user?.name || "",
-              followers: data?.user?.followers || 0,
+              id: data?.user?.id ?? "",
+              image: data?.user?.user?.image ?? "",
+              name: data?.user?.user?.name ?? "",
+              followers: data?.user?.followers ?? 0,
             }}
           />
         </div>
