@@ -4,19 +4,20 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import ClockRewind from "./Icons/ClockRewind";
-import Menu from "./Icons/Menu";
-import ThumbsUp from "./Icons/ThumbsUp";
-import Folder from "./Icons/Folder";
-import Subscriptions from "./Icons/Subscriptions";
 import { Fragment, useEffect, useState } from "react";
-import Settings from "./Icons/Settings";
-import HelpCircle from "./Icons/HelpCircle";
 import { Logo } from "./Icons/Logo";
-import Youtube from "./Icons/Youtube";
-import Trending from "./Icons/Trending";
+import {
+  Subscriptions,
+  Folder,
+  Menu,
+  Youtube,
+  HelpCircle,
+  Trending,
+  Shorts,
+  Settings,
+  ThumbsUp,
+} from "./Icons/Icons";
 import { Dialog, Transition } from "@headlessui/react";
-import Shorts from "./Icons/Shorts";
-import useIsTablet from "~/utils/useIsTablet";
 import useIsMobile from "~/utils/useIsMobile";
 
 interface SidebarMobileProps {
@@ -37,7 +38,6 @@ const SideBarMobile = ({
   isOpen,
   closeSidebar,
 }: SidebarMobileProps) => {
-  const isTablet = useIsTablet();
   const isMobile = useIsMobile();
   // console.log(isTablet);
   // console.log(isMobile);
@@ -199,7 +199,10 @@ const SideBarMobile = ({
       // Sidebar mobile
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
-          className={cn(isSidebarBaseVisible ? "" : "xl:hidden" ,"relative z-50 h-full ")}
+          className={cn(
+            isSidebarBaseVisible ? "" : "xl:hidden",
+            "relative z-50 h-full ",
+          )}
           onClose={setSidebarOpen}
         >
           <Transition.Child
