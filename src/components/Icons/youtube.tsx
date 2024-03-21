@@ -1,4 +1,4 @@
-export default function Youtube(props: React.SVGProps<SVGSVGElement>) {
+const YoutubeBase = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -14,4 +14,5 @@ export default function Youtube(props: React.SVGProps<SVGSVGElement>) {
       <path fill="#FFF" d="m102.421 128.06l66.328-38.418l-66.328-38.418z" />
     </svg>
   );
-}
+};
+export default YoutubeBase;

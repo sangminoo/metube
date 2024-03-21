@@ -27,7 +27,7 @@ export { default as Menu } from "./Menu";
 export { default as Micro } from "./Micro";
 export { default as Keyboard } from "./Keyboard";
 export { default as Subscriptions } from "./Subscriptions";
-export { default as Youtube } from "./Youtube";
+export { default as Youtube } from "./YoutubeBase";
 export { default as YoutubeWhite } from "./YoutubeWhite";
 export { default as Trending } from "./Trending";
 export { default as Notifications } from "./Notifications";
