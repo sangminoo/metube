@@ -29,6 +29,7 @@ import SaveButton from "~/components/Buttons/SaveButton";
 
 const VideoPage: NextPage = () => {
   const router = useRouter();
+  const [scrollY, setScrollY] = useState(0);
   const { videoId } = router.query;
   const { data: sessionData } = useSession();
   const viewerId = sessionData?.user.id;
@@ -48,7 +49,20 @@ const VideoPage: NextPage = () => {
     },
   );
   // console.log(videoData);
-
+  // handle scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    // just trigger this so that the initial state
+    // is updated as soon as the component is mounted
+    // related: https://stackoverflow.com/a/63408216
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const {
     data: sidebarVideos,
     isLoading: sidebarLoading,
@@ -131,21 +145,7 @@ const VideoPage: NextPage = () => {
     }
   };
 
-  // handle scroll
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    // just trigger this so that the initial state
-    // is updated as soon as the component is mounted
-    // related: https://stackoverflow.com/a/63408216
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
 
   return (
     <>
