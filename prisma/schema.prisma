@@ -2,18 +2,19 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
   id                      String                   @id @default(cuid())
   name                    String?
-  email                   String                     @unique
+  email                   String                   @unique
   emailVerified           DateTime?
   image                   String?                  @db.Text
   backgroundImage         String?                  @db.Text
@@ -36,7 +37,7 @@ model Video {
   title            String?            @db.Text
   thumbnailUrl     String?            @db.Text
   description      String?            @db.Text
-  videoUrl         String            @db.Text
+  videoUrl         String             @db.Text
   publish          Boolean            @default(true)
   userId           String
   createdAt        DateTime           @default(now())
@@ -49,7 +50,6 @@ model Video {
   @@index([userId])
 }
 
-
 model VideoEngagement {
   id             String         @id @default(cuid())
   userId         String?
@@ -58,12 +58,11 @@ model VideoEngagement {
   updatedAt      DateTime       @updatedAt
   engagementType EngagementType
   user           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  video          Video?          @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video          Video?         @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([videoId])
 }
-
 
 model Playlist {
   id          String             @id @default(cuid())
