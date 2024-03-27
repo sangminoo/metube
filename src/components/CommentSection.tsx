@@ -4,7 +4,7 @@ import Like from "./Icons/Like";
 import Unlike from "./Icons/Unlike";
 import UserHeart from "./UserHeart";
 import { signIn, useSession } from "next-auth/react";
-import { ChangeEvent, useRef, useState } from "react";
+import { type ChangeEvent, useRef, useState } from "react";
 import FaceSmile from "./Icons/FaceSmile";
 import useAutoSizeTextArea from "~/utils/useAutoSizeTextArea";
 import { api } from "~/utils/api";
@@ -21,6 +21,7 @@ interface Comment {
   user: {
     id: string;
     name: string | null;
+    email: string | null;
     image: string | null;
     handle: string | null;
   };
@@ -45,6 +46,7 @@ const CommentSection = ({
   const [value, setValue] = useState<string>("");
   const [isComment, setIsComment] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(comments);
 
   // Thêm state để theo dõi trạng thái loading của việc xóa comment
   const [deleteCommentLoading, setDeleteCommentLoading] = useState<
@@ -187,8 +189,11 @@ const CommentSection = ({
         <div className="flex w-full py-5 ">
           <div className="pb-1 pr-4">
             <UserImage
-              image={sessionData?.user.image ?? ""}
+              image={sessionData?.user?.image ?? ""}
               className="h-10 w-10"
+              userName={
+                sessionData?.user?.name ?? sessionData?.user?.email ?? ""
+              }
             />
           </div>
           <form
@@ -275,7 +280,13 @@ const CommentSection = ({
                 </div>
               )}
               <div className="flex gap-x-4 py-2 ">
-                <UserImage className="h-10 w-10" image={user.image ?? ""} />
+                <UserImage
+                  className="h-10 w-10"
+                  image={user.image ?? ""}
+                  userName={
+                    sessionData?.user?.name ?? sessionData?.user?.email ?? ""
+                  }
+                />
 
                 <div className="flex w-full flex-col">
                   <div className="flex">
@@ -293,7 +304,7 @@ const CommentSection = ({
                             : "text-black",
                           "text-xs font-semibold",
                         )}
-                        name={user.handle ?? sessionData?.user.name ?? ""}
+                        name={user.handle ?? user?.email ?? ""}
                       />
                     </div>
                     <span className="ml-2  text-xs font-medium text-gray-600">
@@ -326,7 +337,7 @@ const CommentSection = ({
                       >
                         {user.id === sessionData?.user.id ? (
                           <>
-                            <li >
+                            <li>
                               <button className="px-2">
                                 <span>
                                   {" "}
@@ -337,7 +348,7 @@ const CommentSection = ({
                             </li>
                             <li>
                               <button
-                              className="px-2"
+                                className="px-2"
                                 disabled={deleteCommentLoading === comment.id}
                                 onClick={() =>
                                   handleDelete(

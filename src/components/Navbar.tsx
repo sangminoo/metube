@@ -24,7 +24,7 @@ import useIsMobile from "~/utils/useIsMobile";
 
 interface NavbarProps {
   children: React.ReactNode;
-  isDashboard?: boolean
+  isDashboard?: boolean;
 }
 
 interface NavigationItem {
@@ -119,13 +119,10 @@ const Navbar = ({ children }: NavbarProps) => {
 
   const handleSearch = async () => {
     try {
-     
-      
       await router.push({
         pathname: "/SearchPage",
         query: { q: SearchInput },
       });
-
     } catch (error) {
       console.log("Something went wrong to search page", error);
     }
@@ -141,7 +138,6 @@ const Navbar = ({ children }: NavbarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       void handleSearch();
-
     }
   };
   return (
@@ -228,8 +224,8 @@ const Navbar = ({ children }: NavbarProps) => {
 
                 <button
                   onClick={handleSearch}
-                  disabled={ SearchInput.trim() ? false : true }
-                  className="right-0 -ml-[1px] hidden  rounded-br-full hover:cursor-pointer  rounded-tr-full bg-gray-100  px-6  py-3 ring-1 ring-inset    ring-gray-300 placeholder:text-gray-400 hover:bg-gray-200  hover:ring-gray-400  focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:block sm:text-sm sm:leading-6"
+                  disabled={SearchInput.trim() ? false : true}
+                  className="right-0 -ml-[1px] hidden  rounded-br-full rounded-tr-full  bg-gray-100 px-6  py-3  ring-1 ring-inset ring-gray-300    placeholder:text-gray-400 hover:cursor-pointer hover:bg-gray-200  hover:ring-gray-400  focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:block sm:text-sm sm:leading-6"
                 >
                   <Search className=" h-4 w-4  stroke-gray-600" />
                 </button>
@@ -410,6 +406,11 @@ const Navbar = ({ children }: NavbarProps) => {
                       <UserImage
                         image={sessionData?.user?.image ?? ""}
                         className=""
+                        userName={
+                          sessionData?.user?.name ??
+                          sessionData?.user?.email ??
+                          ""
+                        }
                       />
                     )}
                   </Menu.Button>
@@ -433,6 +434,11 @@ const Navbar = ({ children }: NavbarProps) => {
                                   image={sessionData?.user?.image ?? ""}
                                   className="h-10 w-10"
                                   aria-hidden="true"
+                                  userName={
+                                    sessionData?.user?.name ??
+                                    sessionData?.user?.email ??
+                                    ""
+                                  }
                                 />
                               </div>
 

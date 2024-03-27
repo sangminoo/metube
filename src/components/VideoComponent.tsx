@@ -476,22 +476,34 @@ export function VideoInfo({
 export const UserImage = ({
   image,
   className = "",
+  userName,
 }: {
   image?: string;
   className?: string;
+  userName?: string;
 }) => {
+  
   return (
     <div
-      className={`relative  rounded-full border  border-gray-300 shadow-inner  ${
+      className={`relative flex items-center justify-center rounded-full border  border-gray-300 shadow-inner  ${
         className ? className : "h-6 w-6 md:h-8 md:w-8"
       }`}
     >
-      <Image
-        src={image ?? "/profile.png"}
-        className="absolute inset-0 rounded-full  bg-gray-200 object-cover"
-        alt=""
-        fill
-      />
+      {image && (
+        <Image
+          src={image ?? "/profile.png"}
+          className="absolute inset-0 rounded-full  bg-gray-200 object-cover"
+          alt=""
+          fill
+        />
+      )}
+      {!image && (
+        <div className="avatar placeholder absolute h-full w-full">
+          <div className="rounded-full bg-neutral text-neutral-content uppercase">
+            <span>{userName?.charAt(0)}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

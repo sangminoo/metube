@@ -305,6 +305,7 @@ const VideoPage: NextPage = () => {
                             user: {
                               id: user?.id,
                               name: user?.name,
+                              email: user?.email,
                               image: user?.image,
                               handle: user?.handle,
                             },
