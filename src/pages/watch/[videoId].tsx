@@ -145,8 +145,6 @@ const VideoPage: NextPage = () => {
     }
   };
 
-
-
   return (
     <>
       <Head>
@@ -202,17 +200,16 @@ const VideoPage: NextPage = () => {
                                 isMobile
                                   ? "ml-2 text-sm text-gray-400 "
                                   : "text-sm text-gray-600 ",
-                                "  flex items-center ",
+                                "  flex items-center gap-x-1",
                               )}
                             >
-                              <p
-                                className={cn(!isMobile ? "text-sm" : "mr-1 ")}
+                              <span
+                                className={cn(!isMobile ? "text-sm" : "mr-1")}
                               >
                                 {user?.followers}
-                              </p>
+                              </span>
                               <p className={cn(isMobile && "hidden")}>
-                                {" "}
-                                Subscribers
+                                subscribers
                               </p>
                             </p>
                           </div>
@@ -293,7 +290,7 @@ const VideoPage: NextPage = () => {
                     {videoData?.comments && (
                       <CommentSection
                         userVideoId={videoData.user.id}
-                        userVideoImageUrl={videoData.user.image  ?? ""}
+                        userVideoImageUrl={videoData.user.image ?? ""}
                         videoId={video.id}
                         comments={videoData?.comments?.map(
                           ({ user, comment }) => ({

@@ -19,7 +19,7 @@ const ProfileHeader = () => {
       // current: `/${String(userId)}/ProfileVideos}`,
       current: router.pathname === `/[userId]/Featured`,
       content:
-        "Ut irure mollit nulla eiusmod excepteur laboris elit sit anim magna tempor excepteur labore nulla.",
+        "",
     },
     {
       label: "Videos",
@@ -27,7 +27,7 @@ const ProfileHeader = () => {
       // current: `/${String(userId)}/ProfileVideos}`,
       current: router.pathname === `/[userId]/Videos`,
       content:
-        "Fugiat dolor et quis in incididunt aute. Ullamco voluptate consectetur dolor officia sunt est dolor sint.",
+        "",
     },
     {
       label: "Shorts",
@@ -35,7 +35,7 @@ const ProfileHeader = () => {
       current: router.pathname === `/[userId]/Shorts`,
       // current: `/${String(userId)}/ProfileVideos}`,
       content:
-        "Fugiat dolor et quis in incididunt aute. Ullamco voluptate consectetur dolor officia sunt est dolor sint.",
+      "Will be updated soon",
     },
     {
       label: "Live",
@@ -43,7 +43,7 @@ const ProfileHeader = () => {
       current: router.pathname === `/[userId]/Streams`,
       // current: `/${String(userId)}/ProfileVideos}`,
       content:
-        "Fugiat dolor et quis in incididunt aute. Ullamco voluptate consectetur dolor officia sunt est dolor sint.",
+        "Will be updated soon",
     },
     {
       label: "Playlists",
@@ -51,7 +51,7 @@ const ProfileHeader = () => {
       current: router.pathname === `/[userId]/Playlists`,
       // current: `/${String(userId)}/ProfileVideos}`,
       content:
-        "Fugiat dolor et quis in incididunt aute. Ullamco voluptate consectetur dolor officia sunt est dolor sint.",
+        "",
     },
     {
       label: "Community",
@@ -59,7 +59,7 @@ const ProfileHeader = () => {
       current: router.pathname === `/[userId]/Community`,
       // current: `/${String(userId)}/ProfileVideos}`,
       content:
-        "Fugiat dolor et quis in incididunt aute. Ullamco voluptate consectetur dolor officia sunt est dolor sint.",
+        "",
     },
   ];
 
@@ -120,15 +120,22 @@ const ProfileHeader = () => {
               </div>
             )}
 
-            <div className=" flex h-60 items-center">
-              <div className="ml-0 hidden py-4 pr-8 md:block">
-                <Image
-                  src={channel.image ?? "/background.jpg"}
-                  className="h-36 w-full rounded-full object-cover"
-                  alt=""
-                  width={1080}
-                  height={128}
-                />
+            <div className=" flex h-60 items-center gap-x-6">
+              <div className="relative ml-0 hidden h-36 w-36 rounded-full md:block">
+                {channel.image ? (
+                  <Image
+                    src={channel.image ?? "/background.jpg"}
+                    className="absolute inset-0  rounded-full  object-cover"
+                    alt=""
+                    fill
+                  />
+                ) : (
+                  <>
+                    <div className="absolute inset-0  flex  items-center justify-center rounded-full bg-black object-cover text-7xl font-semibold text-white">
+                      {data.user.handle ?? data.user.name?.charAt(0)}
+                    </div>
+                  </>
+                )}
               </div>
               <div className="flex flex-col gap-y-2 ">
                 <h2 className="text-4xl font-bold">{channel.name}</h2>
@@ -150,12 +157,30 @@ const ProfileHeader = () => {
                     và 9 đường liên kết khác
                   </span>
                 </p>
-                <div className="-ml-8">
-                  <FollowButton
-                    viewerId={sessionData?.user.id ?? ""}
-                    followingId={userId as string}
-                    viewer={viewer}
-                  />
+                <div className="">
+                  {userId !== sessionData?.user.id && (
+                    <FollowButton
+                      viewerId={sessionData?.user.id ?? ""}
+                      followingId={userId as string}
+                      viewer={viewer}
+                    />
+                  )}
+                  {userId === sessionData?.user.id && (
+                    <div className="flex items-center gap-x-4 ">
+                      <button
+                        className="btn btn-square btn-sm  w-fit px-4"
+                        onClick={() => router.push(`/Settings`)}
+                      >
+                        Edit info{" "}
+                      </button>
+                      <button
+                        className="btn btn-square btn-sm  w-fit px-4"
+                        onClick={() => router.push(`/dashboard`)}
+                      >
+                        Edit video{" "}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

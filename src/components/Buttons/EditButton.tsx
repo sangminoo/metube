@@ -421,7 +421,7 @@ export const ImageCropper = ({
   imageType,
   setIsOpen,
 }: {
-  setCurrentPage: (page: number) => void;
+  setCurrentPage?: (page: number) => void;
   // image: (image: string) => void;
   image: File | null;
   handleSubmit: (croppedDataUrl: string) => void;

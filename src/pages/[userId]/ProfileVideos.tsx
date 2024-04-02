@@ -16,10 +16,10 @@ const ProfileVideos: NextPage = () => {
     userId as string,
   );
 
-  console.log(data);
+  // console.log(data);
 
   const errorTypes = !data || data.videos.length === 0 || error;
-  console.log(errorTypes);
+  // console.log(errorTypes);
 
   const Error = () => {
     if (isLoading) {
